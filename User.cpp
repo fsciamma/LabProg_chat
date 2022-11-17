@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <string>
 #include "User.h"
 
 User::User() {
@@ -21,16 +22,26 @@ void User::createChat(User* u) {//TODO vedere se si può fare più bellino
 }
 
 void User::sendMessage() {
-    std::string name;
-    std::cout << "Selezionare un destinatario:" << std::endl;
-    std::cin >> name;
+    std::string name = writeReceiverName();
     auto c = myChats.find(name)->second;
     Message* msg = new Message();
     msg->setSender(this->name);
-    std::string txt;
-    std::cout << "Inserire contenuto del messaggio:" << std::endl;
-    //FIXME quando il messaggio contiene più parole viene salvata solo la prima
-    std::cin >> txt;
+    std::string txt = writeMessageText();
     msg->setText(txt);
     c->addMessage(*msg);
+}
+
+std::string User::writeReceiverName() {
+    std::string name;
+    std::cout << "Selezionare un destinatario: \n";
+    std::cin >> name;
+    return name;
+}
+
+std::string User::writeMessageText() {
+    std::string txt;
+    std::cout << "Inserire contenuto del messaggio: \n";
+    std::cin.ignore();
+    getline(std::cin, txt);
+    return txt;
 }

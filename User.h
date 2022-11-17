@@ -21,6 +21,8 @@ public:
     User();
     void createChat(User* u);
     void sendMessage();
+    std::string writeReceiverName();
+    std::string writeMessageText();
 
 
 };
