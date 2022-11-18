@@ -25,7 +25,7 @@ void User::createChat(User* u) {//TODO valutare se serve un metodo di appoggio c
     c->subscribe(u->myNotifier);
 }
 
-void User::sendMessage() {
+void User::sendMessage() { //TODO forse non dovrebbe lanciare un'eccezione, ma solo gestire con un if else...
     std::string _name = writeReceiverName();
     if(myChats.find(_name) == myChats.end()){
         throw std::invalid_argument("Non e' stata trovata nessuna chat con " + _name);
@@ -35,7 +35,7 @@ void User::sendMessage() {
     c->addMessage(*msg);
 }
 
-void User::sendMessage(std::string _name, std::string txt) {
+void User::sendMessage(std::string txt, std::string _name) {
     if(myChats.find(_name) == myChats.end()){
         throw std::invalid_argument("Non e' stata trovata nessuna chat con " + _name);
     }

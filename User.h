@@ -22,7 +22,7 @@ public:
     explicit User(std::string name);
     void createChat(User* u);
     void sendMessage();
-    void sendMessage(std::string _name, std::string txt);
+    void sendMessage(std::string txt, std::string _name = "Filippo");
     std::string writeReceiverName();
     std::string writeMessageText();
     void readChat();
