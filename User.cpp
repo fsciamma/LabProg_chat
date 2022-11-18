@@ -35,6 +35,15 @@ void User::sendMessage() {
     c->addMessage(*msg);
 }
 
+void User::sendMessage(std::string _name, std::string txt) {
+    if(myChats.find(_name) == myChats.end()){
+        throw std::invalid_argument("Non e' stata trovata nessuna chat con " + _name);
+    }
+    auto c = myChats.find(_name)->second;
+    Message* msg = new Message(this->name, txt);
+    c->addMessage(*msg);
+}
+
 std::string User::writeReceiverName() {
     std::string name;
     std::cout << "Selezionare un destinatario: \n";
