@@ -12,10 +12,10 @@ const std::string &Message::getText() const {
     return text;
 }
 
-void Message::setSender(const std::string &sender) {
-    Message::sender = sender;
+Message::Message(std::string sender, std::string text) : sender(sender), text(text){
+    time(&myTime);
 }
 
-void Message::setText(const std::string &text) {
-    Message::text = text;
+time_t Message::getMyTime() const {
+    return myTime;
 }

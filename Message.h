@@ -12,13 +12,15 @@ class Message {
 private:
     std::string sender;
     std::string text;
+    time_t myTime;
 
 public:
+    Message(std::string sender, std::string text);
+
     const std::string &getSender() const;
     const std::string &getText() const;
 
-    void setText(const std::string &text);
-    void setSender(const std::string &sender);
+    time_t getMyTime() const;
 };
 
 
