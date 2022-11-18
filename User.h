@@ -24,7 +24,7 @@ public:
     void sendMessage();
     std::string writeReceiverName();
     std::string writeMessageText();
-
+    void readChat();
 
 };
 

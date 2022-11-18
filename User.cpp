@@ -26,13 +26,12 @@ void User::createChat(User* u) {//TODO valutare se serve un metodo di appoggio c
 }
 
 void User::sendMessage() {
-    //TODO aggiungere un'eccezione che viene lanciata se la persona a cui si vuole inviare un messaggio non figura tra quelle salvate in myChats
-    std::string name = writeReceiverName();
-    auto c = myChats.find(name)->second;
-    Message* msg = new Message();
-    msg->setSender(this->name);
-    std::string txt = writeMessageText();
-    msg->setText(txt);
+    std::string _name = writeReceiverName();
+    if(myChats.find(_name) == myChats.end()){
+        throw std::invalid_argument("Non e' stata trovata nessuna chat con " + _name);
+    }
+    auto c = myChats.find(_name)->second;
+    Message* msg = new Message(this->name, writeMessageText());
     c->addMessage(*msg);
 }
 
@@ -49,4 +48,11 @@ std::string User::writeMessageText() {
     std::cin.ignore();
     getline(std::cin, txt);
     return txt;
+}
+
+void User::readChat() {
+    std::string chatName;
+    std::cout << "Quale chat vuoi leggere? \n";
+    getline(std::cin, chatName);
+    this->myChats.find(chatName)->second->readChatMessages();
 }
