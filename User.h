@@ -19,6 +19,7 @@ private:
 
 public:
     User();
+    explicit User(std::string name);
     void createChat(User* u);
     void sendMessage();
     std::string writeReceiverName();

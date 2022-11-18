@@ -7,10 +7,14 @@
 #include "User.h"
 
 User::User() {
-    using namespace std;
-    cout << "Inserisci il nome dell'utente:\n";
-    cin >> this->name;
+    std::cout << "Inserisci il nome dell'utente:\n";
+    std::cin >> this->name;
     this->myNotifier = new Notifier(this->name);
+}
+
+User::User(std::string name){
+    this->name = name;
+    this->myNotifier = new Notifier(name);
 }
 
 void User::createChat(User* u) {//TODO valutare se serve un metodo di appoggio che prenda in ingresso lo shared_ptr a Chat e faccia l'insert su User1->myChats della coppia User2->nome - Chat e il subscribe di User1->myNotifier alla Chat e faccia lo stesso su User2
@@ -22,6 +26,7 @@ void User::createChat(User* u) {//TODO valutare se serve un metodo di appoggio c
 }
 
 void User::sendMessage() {
+    //TODO aggiungere un'eccezione che viene lanciata se la persona a cui si vuole inviare un messaggio non figura tra quelle salvate in myChats
     std::string name = writeReceiverName();
     auto c = myChats.find(name)->second;
     Message* msg = new Message();
