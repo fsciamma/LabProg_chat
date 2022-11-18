@@ -10,6 +10,9 @@
 #include "Observer.h"
 
 class Notifier : public Observer{
+private:
+    std::string name;
+
 public:
     explicit Notifier(const std::string &name);
 

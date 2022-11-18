@@ -8,9 +8,6 @@
 #include "Message.h"
 
 class Observer {
-protected:
-    std::string name;
-
 public:
     virtual void update(Message msg) = 0;
     virtual std::string getName() = 0;
