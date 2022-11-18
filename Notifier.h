@@ -16,6 +16,8 @@ private:
 public:
     explicit Notifier(const std::string &name);
 
+    ~Notifier() override;
+
     void update(Message msg) override;
     std::string getName() override;
 

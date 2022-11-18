@@ -18,3 +18,7 @@ std::string Notifier::getName() {
     return name;
 }
 
+Notifier::~Notifier() {
+
+}
+
