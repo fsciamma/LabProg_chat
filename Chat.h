@@ -24,6 +24,7 @@ public:
     void notifyObservers(Message msg) const override;
 
     void addMessage(Message);
+    void readChatMessages();
 };
 
 
