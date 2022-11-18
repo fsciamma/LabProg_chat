@@ -9,6 +9,10 @@ Notifier::Notifier(const std::string &name){
     this->name = name;
 }
 
+Notifier::~Notifier() {
+
+}
+
 void Notifier::update(Message msg) {
     char time[20];
     time_t _t = msg.getMyTime();
@@ -22,9 +26,5 @@ void Notifier::update(Message msg) {
 
 std::string Notifier::getName() {
     return name;
-}
-
-Notifier::~Notifier() {
-
 }
 
