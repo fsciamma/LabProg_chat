@@ -8,12 +8,12 @@
 
 User::User() {
     using namespace std;
-    cout << "Inserisci il nome dell'utente" << endl;
+    cout << "Inserisci il nome dell'utente:\n";
     cin >> this->name;
     this->myNotifier = new Notifier(this->name);
 }
 
-void User::createChat(User* u) {//TODO vedere se si può fare più bellino
+void User::createChat(User* u) {//TODO valutare se serve un metodo di appoggio che prenda in ingresso lo shared_ptr a Chat e faccia l'insert su User1->myChats della coppia User2->nome - Chat e il subscribe di User1->myNotifier alla Chat e faccia lo stesso su User2
     auto c = std::make_shared<Chat>();
     this->myChats.insert(std::make_pair(u->name, c));
     c->subscribe(this->myNotifier);
