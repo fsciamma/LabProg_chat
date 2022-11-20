@@ -18,6 +18,7 @@ User::User(std::string name){
 }
 
 void User::createChat(User* u) {//TODO valutare se serve un metodo di appoggio che prenda in ingresso lo shared_ptr a Chat e faccia l'insert su User1->myChats della coppia User2->nome - Chat e il subscribe di User1->myNotifier alla Chat e faccia lo stesso su User2
+    //TODO mettere un controllo per verificare che non esista già una chat con lo stesso nome
     auto c = std::make_shared<Chat>();
     this->myChats.insert(std::make_pair(u->name, c));
     c->subscribe(this->myNotifier);
