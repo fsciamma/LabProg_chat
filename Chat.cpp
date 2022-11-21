@@ -40,3 +40,12 @@ void Chat::readChatMessages() {
         std::cout << time << " - " + msg.getSender() + " : " + msg.getText() + "\n";
     }
 }
+
+void Chat::readLastMessage() {
+    auto msg = this->messages.back();
+    time_t _t = msg.getMyTime();
+    struct tm* localTime = localtime(&_t);
+    char timestamp[40];
+    strftime(timestamp, 40, "[%d/%m, %H:%M:%S]", localTime);
+    std::cout << timestamp << " " + msg.getSender() + ": " + msg.getText() << std::endl;
+}

@@ -25,6 +25,7 @@ public:
 
     void addMessage(Message);
     void readChatMessages();
+    void readLastMessage();
 };
 
 
