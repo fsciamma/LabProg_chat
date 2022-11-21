@@ -63,6 +63,11 @@ std::string User::writeMessageText() {
 void User::readChat() {
     std::string chatName;
     std::cout << "Quale chat vuoi leggere? \n";
+    std::cin.ignore();
     getline(std::cin, chatName);
     this->myChats.find(chatName)->second->readChatMessages();
+}
+
+void User::readLastMessageFrom(std::string chatName) {
+    this->myChats.find(chatName)->second->readLastMessage();
 }

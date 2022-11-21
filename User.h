@@ -26,6 +26,7 @@ public:
     std::string writeReceiverName();
     std::string writeMessageText();
     void readChat();
+    void readLastMessageFrom(std::string chatName);
 
 };
 
