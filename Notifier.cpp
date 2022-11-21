@@ -13,7 +13,7 @@ Notifier::~Notifier() {
 
 }
 
-void Notifier::update(Message msg) {
+void Notifier::update(Message& msg) {
     time_t _t = msg.getMyTime();
     struct tm* localTime = localtime(&_t);
     char timestamp[40];

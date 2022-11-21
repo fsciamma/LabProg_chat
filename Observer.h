@@ -11,7 +11,7 @@ class Observer {
 public:
     virtual ~Observer(){}
 
-    virtual void update(Message msg) = 0;
+    virtual void update(Message& msg) = 0;
     virtual std::string getName() = 0;
 };
 

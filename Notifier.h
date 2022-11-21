@@ -18,7 +18,7 @@ public:
 
     ~Notifier() override;
 
-    void update(Message msg) override;
+    void update(Message& msg) override;
     std::string getName() override;
 
 };
