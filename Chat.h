@@ -14,7 +14,7 @@
 class Chat : public Subject{
 private:
     std::list<Observer*> readers;
-    std::vector<Message> messages; //TODO sostituire con Message
+    std::vector<Message> messages;
 
 public:
     Chat();

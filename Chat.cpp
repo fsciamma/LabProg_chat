@@ -33,11 +33,11 @@ void Chat::addMessage(Message msg) {
 
 void Chat::readChatMessages() {
     for(auto msg: this->messages){
-        char time[20];
+        char timestamp[40];
         time_t _t = msg.getMyTime();
         struct tm* localTime = localtime(&_t);
-        strftime(time, 20, "%H:%M:%S", localTime);
-        std::cout << time << " - " + msg.getSender() + " : " + msg.getText() + "\n";
+        strftime(timestamp, 40, "[%d/%m, %H:%M:%S]", localTime);
+        std::cout << timestamp << " - " + msg.getSender() + " : " + msg.getText() + "\n";
     }
 }
 
