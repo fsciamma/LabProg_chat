@@ -13,6 +13,7 @@ private:
     std::string sender;
     std::string text;
     time_t myTime;
+    //TODO aggiungere un boolean read?
 
 public:
     Message(std::string sender, std::string text);
