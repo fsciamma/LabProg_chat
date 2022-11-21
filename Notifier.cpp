@@ -19,7 +19,7 @@ void Notifier::update(Message& msg) {
     char timestamp[40];
     strftime(timestamp, 40, "[%d/%m, %H:%M:%S]", localTime);
 
-    std::cout << "Ehi " + this->name + ", hai ricevuto un messaggio!\n" + timestamp + " " + msg.getSender() + ": " + msg.getText() << std::endl;
+    std::cout << "Ehi " + this->name + ", hai ricevuto un messaggio!\n" << std::endl;// + timestamp + " " + msg.getSender() + ": " + msg.getText() << std::endl;
     //TODO forse dovrei mettere la parte inerente al messaggio in Chat...
 }
 
