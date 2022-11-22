@@ -37,7 +37,7 @@ void Chat::readChatMessages() {
         time_t _t = msg.getMyTime();
         struct tm* localTime = localtime(&_t);
         strftime(timestamp, 40, "[%d/%m, %H:%M:%S]", localTime);
-        std::cout << timestamp << " - " + msg.getSender() + " : " + msg.getText() + "\n";
+        std::cout << timestamp << " - " + msg.getSender() + " : " + msg.getText() << std::endl;
     }
 }
 
