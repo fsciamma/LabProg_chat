@@ -6,6 +6,7 @@
 #include <string>
 #include <unistd.h>
 #include "User.h"
+#include "GroupChat.h"
 
 User::User() {
     std::cout << "Inserisci il nome dell'utente:" << std::endl;
@@ -25,6 +26,16 @@ void User::createChat(User* u) {//TODO valutare se serve un metodo di appoggio c
     c->subscribe(this->myNotifier);
     u->myChats.insert(std::make_pair(this->name, c));
     c->subscribe(u->myNotifier);
+}
+
+void User::createGroupChat(std::vector<User*> users, std::string groupName){
+    auto c = std::make_shared<GroupChat>(groupName);
+    this->myChats.insert(std::make_pair(groupName, c));
+    c->subscribe(this->myNotifier);
+    for(auto u: users){
+        u->myChats.insert(std::make_pair(groupName, c));
+        c->subscribe(u->myNotifier);
+    }
 }
 
 void User::deleteChat(User* u){

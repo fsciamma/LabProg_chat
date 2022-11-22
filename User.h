@@ -23,6 +23,7 @@ public:
     virtual ~User(){}
 
     void createChat(User* u);
+    void createGroupChat(std::vector<User*> users, std::string groupName);
     void deleteChat(User* u);
     //void sendMessage();
     void sendMessage(std::string txt, std::string _name = "Filippo");
