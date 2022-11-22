@@ -20,12 +20,16 @@ private:
 public:
     User();
     explicit User(std::string name);
+    virtual ~User(){}
+
     void createChat(User* u);
-    void sendMessage();
+    void deleteChat(User* u);
+    //void sendMessage();
     void sendMessage(std::string txt, std::string _name = "Filippo");
-    std::string writeReceiverName();
-    std::string writeMessageText();
-    void readChat();
+    //std::string writeReceiverName();
+    //std::string writeMessageText();
+    //void readChat();
+    void readChat(std::string chatName);
     void readLastMessageFrom(std::string chatName);
 
 };

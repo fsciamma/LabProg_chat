@@ -7,7 +7,7 @@
 #include "User.h"
 
 User::User() {
-    std::cout << "Inserisci il nome dell'utente:\n";
+    std::cout << "Inserisci il nome dell'utente:" << std::endl;
     std::cin >> this->name;
     this->myNotifier = new Notifier(this->name);
 }
@@ -26,6 +26,13 @@ void User::createChat(User* u) {//TODO valutare se serve un metodo di appoggio c
     c->subscribe(u->myNotifier);
 }
 
+void User::deleteChat(User* u){
+    if(this->myChats.find(u->name) != this->myChats.end()){
+        this->myChats.erase(u->name);
+    }
+}
+
+/*
 void User::sendMessage() { //TODO forse non dovrebbe lanciare un'eccezione, ma solo gestire con un if else...
     std::string _name = writeReceiverName();
     if(myChats.find(_name) == myChats.end()){
@@ -35,6 +42,7 @@ void User::sendMessage() { //TODO forse non dovrebbe lanciare un'eccezione, ma s
     Message* msg = new Message(this->name, writeMessageText());
     c->addMessage(*msg);
 }
+ */
 
 void User::sendMessage(std::string txt, std::string _name) {
     if(myChats.find(_name) == myChats.end()){
@@ -44,27 +52,32 @@ void User::sendMessage(std::string txt, std::string _name) {
     Message* msg = new Message(this->name, txt);
     c->addMessage(*msg);
 }
-
+/*
 std::string User::writeReceiverName() {
     std::string name;
-    std::cout << "Selezionare un destinatario: \n";
+    std::cout << "Selezionare un destinatario:" << std::endl;
     std::cin >> name;
     return name;
 }
 
 std::string User::writeMessageText() {
     std::string txt;
-    std::cout << "Inserire contenuto del messaggio: \n";
-    std::cin.ignore();
+    std::cout << "Inserire contenuto del messaggio:" << std::endl;
+    //std::cin.ignore();
     getline(std::cin, txt);
     return txt;
 }
 
 void User::readChat() {
     std::string chatName;
-    std::cout << "Quale chat vuoi leggere? \n";
-    std::cin.ignore();//TODO fixare i problemi che ci sono con cin.ignore
+    std::cout << "Quale chat vuoi leggere?" << std::endl;
+    //std::cin.ignore();//TODO fixare i problemi che ci sono con cin.ignore
     getline(std::cin, chatName);
+    this->myChats.find(chatName)->second->readChatMessages();
+}
+ */
+
+void User::readChat(std::string chatName){
     this->myChats.find(chatName)->second->readChatMessages();
 }
 
