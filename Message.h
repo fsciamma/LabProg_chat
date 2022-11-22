@@ -18,6 +18,8 @@ private:
 public:
     Message(std::string sender, std::string text);
 
+    ~Message(){}
+
     const std::string &getSender() const;
     const std::string &getText() const;
 
