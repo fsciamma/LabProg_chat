@@ -22,22 +22,29 @@ User::User(std::string name){
 }
 
 void User::createChat(User* u) {//TODO valutare se serve un metodo di appoggio che prenda in ingresso lo shared_ptr a Chat e faccia l'insert su User1->myChats della coppia User2->nome - Chat e il subscribe di User1->myNotifier alla Chat e faccia lo stesso su User2
-    //TODO mettere un controllo per verificare che non esista già una chat con lo stesso nome
-    auto c = std::make_shared<Chat>();
-    this->myChats.insert(std::make_pair(u->name, c));
-    c->subscribe(this->myNotifier);
-    u->myChats.insert(std::make_pair(this->name, c));
-    c->subscribe(u->myNotifier);
+    if(this->myChats.find(u->name) == this->myChats.end()) { //controlla che non ci sia già una chat con lo stesso utente
+        auto c = std::make_shared<Chat>();
+        this->myChats.insert(std::make_pair(u->name, c));
+        c->subscribe(this->myNotifier);
+        u->myChats.insert(std::make_pair(this->name, c));
+        c->subscribe(u->myNotifier);
+    } else {
+        std::cerr << "Esiste gia' una chat con " + u->name << std::endl;
+    }
 }
 
 void User::createGroupChat(std::vector<User*> users, std::string groupName){
-    auto c = std::make_shared<GroupChat>(groupName);
-    this->myChats.insert(std::make_pair(groupName, c));
-    c->subscribe(this->myNotifier);
-    c->subscribe(this->BN); //Usato solo per avere una seconda sottoclasse di Observer, per mettere in risalto il controllo tramite dynamic_cast
-    for(auto u: users){
-        u->myChats.insert(std::make_pair(groupName, c));
-        c->subscribe(u->myNotifier);
+    if(this->myChats.find(groupName) == this->myChats.end()) {
+        auto c = std::make_shared<GroupChat>(groupName);
+        this->myChats.insert(std::make_pair(groupName, c));
+        c->subscribe(this->myNotifier);
+        c->subscribe(this->BN); //Usato solo per avere una seconda sottoclasse di Observer, per mettere in risalto il controllo tramite dynamic_cast
+        for (auto u: users) {
+            u->myChats.insert(std::make_pair(groupName, c));
+            c->subscribe(u->myNotifier);
+        }
+    } else {
+        std::cerr << "Hai gia' un gruppo chiamato " + groupName << std::endl;
     }
 }
 
