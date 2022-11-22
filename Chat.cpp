@@ -2,7 +2,6 @@
 // Created by filip on 15/11/2022.
 //
 
-#include <iostream>
 #include "Chat.h"
 
 Chat::Chat() {

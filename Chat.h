@@ -6,13 +6,14 @@
 #define LABPROG_CHAT_CHAT_H
 
 
+#include <iostream>
 #include <vector>
 #include <string>
 #include <list>
 #include "Subject.h"
 
 class Chat : public Subject{
-private:
+protected:
     std::list<Observer*> readers;
     std::vector<Message> messages;
 
@@ -24,9 +25,9 @@ public:
     void unsubscribe(Observer *o) override;
     void notifyObservers(Message msg) const override;
 
-    void addMessage(Message);
-    void readChatMessages();
-    void readLastMessage();
+    void addMessage(Message msg);
+    virtual void readChatMessages();
+    virtual void readLastMessage();
 };
 
 
