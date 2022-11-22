@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <string>
+#include <unistd.h>
 #include "User.h"
 
 User::User() {
@@ -45,12 +46,15 @@ void User::sendMessage() { //TODO forse non dovrebbe lanciare un'eccezione, ma s
  */
 
 void User::sendMessage(std::string txt, std::string _name) {
-    if(myChats.find(_name) == myChats.end()){
-        throw std::invalid_argument("Non e' stata trovata nessuna chat con " + _name);
+    if(myChats.find(_name) != myChats.end()){
+        auto c = myChats.find(_name)->second;
+        Message* msg = new Message(this->name, txt);
+        c->addMessage(*msg);
+        sleep(1);
+    }else{
+        std::cerr << "Non e' stata trovata nessuna chat con " + _name << std::endl;
     }
-    auto c = myChats.find(_name)->second;
-    Message* msg = new Message(this->name, txt);
-    c->addMessage(*msg);
+
 }
 /*
 std::string User::writeReceiverName() {
