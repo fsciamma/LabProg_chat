@@ -3,6 +3,7 @@
 //
 
 #include "Chat.h"
+#include "Notifier.h"
 
 Chat::Chat() {
     std::cout << "E' stata creata una chat" << std::endl; //TODO levare
@@ -18,9 +19,11 @@ void Chat::unsubscribe(Observer *o) {
 
 void Chat::notifyObservers(Message msg) const {
     for(auto obs: readers){
-        //TODO potrei passare al notifier il nome del User a cui appartiene e fare un controllo su quello
-        if(obs->getName() != msg.getSender()){ //TODO aggiungere controllo su sender
-            obs->update(msg);
+        if(Notifier* obsNot = dynamic_cast<Notifier*>(obs)) {
+            //TODO potrei passare al notifier il nome del User a cui appartiene e fare un controllo su quello
+            if (obsNot->getName() != msg.getSender()) { //TODO aggiungere controllo su sender
+                obs->update(msg);
+            }
         }
     }
 }

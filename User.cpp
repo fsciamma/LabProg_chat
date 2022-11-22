@@ -12,11 +12,13 @@ User::User() {
     std::cout << "Inserisci il nome dell'utente:" << std::endl;
     std::cin >> this->name;
     this->myNotifier = new Notifier(this->name);
+    this->BN = new badNotifier(4);
 }
 
 User::User(std::string name){
     this->name = name;
     this->myNotifier = new Notifier(name);
+    this->BN = new badNotifier(4);
 }
 
 void User::createChat(User* u) {//TODO valutare se serve un metodo di appoggio che prenda in ingresso lo shared_ptr a Chat e faccia l'insert su User1->myChats della coppia User2->nome - Chat e il subscribe di User1->myNotifier alla Chat e faccia lo stesso su User2
@@ -32,6 +34,7 @@ void User::createGroupChat(std::vector<User*> users, std::string groupName){
     auto c = std::make_shared<GroupChat>(groupName);
     this->myChats.insert(std::make_pair(groupName, c));
     c->subscribe(this->myNotifier);
+    c->subscribe(this->BN); //Usato solo per avere una seconda sottoclasse di Observer, per mettere in risalto il controllo tramite dynamic_cast
     for(auto u: users){
         u->myChats.insert(std::make_pair(groupName, c));
         c->subscribe(u->myNotifier);

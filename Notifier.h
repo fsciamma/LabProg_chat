@@ -19,7 +19,7 @@ public:
     virtual ~Notifier() override{}
 
     void update(Message& msg) override;
-    std::string getName() override;
+    std::string getName();
 
 };
 

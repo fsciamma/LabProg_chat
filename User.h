@@ -10,12 +10,14 @@
 #include <memory>
 #include "Notifier.h"
 #include "Chat.h"
+#include "badNotifier.h"
 
 class User {
 private:
     std::string name;
     std::map<std::string, std::shared_ptr<Chat>> myChats;
     Notifier* myNotifier;
+    badNotifier* BN;
 
 public:
     User();
