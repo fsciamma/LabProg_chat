@@ -10,6 +10,8 @@
 
 class Subject {
 public:
+    virtual ~Subject(){}
+
     virtual void subscribe(Observer* o) = 0;
     virtual void unsubscribe(Observer* o) = 0;
     virtual void notifyObservers(Message msg) const = 0;
