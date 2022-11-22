@@ -20,8 +20,7 @@ void Chat::unsubscribe(Observer *o) {
 void Chat::notifyObservers(Message msg) const {
     for(auto obs: readers){
         if(Notifier* obsNot = dynamic_cast<Notifier*>(obs)) {
-            //TODO potrei passare al notifier il nome del User a cui appartiene e fare un controllo su quello
-            if (obsNot->getName() != msg.getSender()) { //TODO aggiungere controllo su sender
+            if (obsNot->getName() != msg.getSender()) {
                 obs->update(msg);
             }
         }
