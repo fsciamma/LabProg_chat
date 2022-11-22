@@ -99,3 +99,10 @@ void User::readChat(std::string chatName){
 void User::readLastMessageFrom(std::string chatName) {
     this->myChats.find(chatName)->second->readLastMessage();
 }
+
+void User::leaveGroup(std::string groupName) {
+    if(this->myChats.find(groupName) != this->myChats.end()){
+        this->myChats.erase(groupName);
+        std::cout << "Hai lasciato il gruppo " + groupName << std::endl;
+    }
+}

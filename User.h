@@ -32,6 +32,7 @@ public:
     //void readChat();
     void readChat(std::string chatName);
     void readLastMessageFrom(std::string chatName);
+    void leaveGroup(std::string groupName);
 
 };
 
