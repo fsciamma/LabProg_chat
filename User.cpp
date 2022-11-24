@@ -6,7 +6,6 @@
 #include <string>
 #include <unistd.h>
 #include "User.h"
-#include "GroupChat.h"
 
 User::User() {
     std::cout << "Inserisci il nome dell'utente:" << std::endl;
@@ -103,11 +102,19 @@ void User::readChat() {
  */
 
 void User::readChat(std::string chatName){
-    this->myChats.find(chatName)->second->readChatMessages();
+    try {
+        this->myChats.find(chatName)->second->readChatMessages();
+    } catch (std::out_of_range &o){
+        std::cerr << "Out of range error: " << o.what() << std::endl;
+    }
 }
 
 void User::readLastMessageFrom(std::string chatName) {
-    this->myChats.find(chatName)->second->readLastMessage();
+    try { //TODO aggiungere un controllo sull'esistenza o meno della Chat con chatName
+        this->myChats.find(chatName)->second->readLastMessage();
+    } catch (std::out_of_range &o){
+        std::cerr << "Out of range error: " << o.what() << std::endl;
+    }
 }
 
 void User::leaveGroup(std::string groupName) {

@@ -9,7 +9,7 @@
 #include <map>
 #include <memory>
 #include "Notifier.h"
-#include "Chat.h"
+#include "GroupChat.h"
 #include "badNotifier.h"
 
 class User {
