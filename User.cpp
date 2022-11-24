@@ -14,7 +14,7 @@ User::User() {
     this->BN = new badNotifier(4);
 }
 
-User::User(std::string name){
+User::User(const std::string& name){
     this->name = name;
     this->myNotifier = new Notifier(name);
     this->BN = new badNotifier(4);
@@ -51,19 +51,7 @@ void User::deleteChat(User* u){
     }
 }
 
-/*
-void User::sendMessage() { //TODO forse non dovrebbe lanciare un'eccezione, ma solo gestire con un if else...
-    std::string _name = writeReceiverName();
-    if(myChats.find(_name) == myChats.end()){
-        throw std::invalid_argument("Non e' stata trovata nessuna chat con " + _name);
-    }
-    auto c = myChats.find(_name)->second;
-    Message* msg = new Message(this->name, writeMessageText());
-    c->addMessage(*msg);
-}
- */
-
-void User::sendMessage(std::string txt, std::string _name) { //TODO creare test e mettere try/catch nel main
+void User::sendMessage(std::string txt, const std::string& _name) { //TODO creare test e mettere try/catch nel main
     if(myChats.find(_name) == myChats.end()){
         throw std::runtime_error("Non e' stata trovata nessuna chat con " + _name);
     }
@@ -72,48 +60,26 @@ void User::sendMessage(std::string txt, std::string _name) { //TODO creare test 
     c->addMessage(*msg);
     sleep(1);
 }
-/*
-std::string User::writeReceiverName() {
-    std::string name;
-    std::cout << "Selezionare un destinatario:" << std::endl;
-    std::cin >> name;
-    return name;
-}
 
-std::string User::writeMessageText() {
-    std::string txt;
-    std::cout << "Inserire contenuto del messaggio:" << std::endl;
-    //std::cin.ignore();
-    getline(std::cin, txt);
-    return txt;
-}
-
-void User::readChat() {
-    std::string chatName;
-    std::cout << "Quale chat vuoi leggere?" << std::endl;
-    //std::cin.ignore();//TODO fixare i problemi che ci sono con cin.ignore
-    getline(std::cin, chatName);
-    this->myChats.find(chatName)->second->readChatMessages();
-}
- */
-
-void User::readChat(std::string chatName){
+void User::readChat(const std::string& chatName){
     try {
-        this->myChats.find(chatName)->second->readChatMessages();
+        auto chatNameMapped = this->myChats.find(chatName);
+        chatNameMapped != this->myChats.end() ? chatNameMapped->second->readChatMessages() : throw std::runtime_error("Non esiste nessuna chat " + chatName); //TODO aggiungere metodo per testare il throw dell'eccezione
     } catch (std::out_of_range &o){
         std::cerr << "Out of range error: " << o.what() << std::endl;
     }
 }
 
-void User::readLastMessageFrom(std::string chatName) {
-    try { //TODO aggiungere un controllo sull'esistenza o meno della Chat con chatName
-        this->myChats.find(chatName)->second->readLastMessage();
+void User::readLastMessageFrom(const std::string& chatName) {
+    try {
+        auto chatNameMapped = this->myChats.find(chatName);
+        chatNameMapped != this->myChats.end() ? chatNameMapped->second->readLastMessage() : throw std::runtime_error("Non esiste nessuna chat " + chatName); //TODO aggiungere metodo per testare il throw dell'eccezione
     } catch (std::out_of_range &o){
         std::cerr << "Out of range error: " << o.what() << std::endl;
     }
 }
 
-void User::leaveGroup(std::string groupName) {
+void User::leaveGroup(const std::string& groupName) {
     if(this->myChats.find(groupName) != this->myChats.end()){
         this->myChats.erase(groupName);
         std::cout << "Hai lasciato il gruppo " + groupName << std::endl;
