@@ -13,7 +13,10 @@ private:
     std::string groupName;
 
 public:
-    GroupChat(std::string gn) : groupName(gn){}
+    explicit GroupChat(std::string gn) : groupName(gn){}
+    ~GroupChat(){}
+
+    const std::string &getGroupName() const;
 
     void readChatMessages() override;
     void readLastMessage() override;

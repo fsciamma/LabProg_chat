@@ -4,7 +4,14 @@
 
 #include "GroupChat.h"
 
+const std::string &GroupChat::getGroupName() const {
+    return groupName;
+}
+
 void GroupChat::readChatMessages() {
+    if(this->messages.empty()){
+        throw std::out_of_range("Non ci sono ancora messaggi");
+    }
     for(auto msg: this->messages){
         char timestamp[40];
         time_t _t = msg.getMyTime();
@@ -15,6 +22,9 @@ void GroupChat::readChatMessages() {
 }
 
 void GroupChat::readLastMessage() {
+    if(this->messages.empty()){
+        throw std::out_of_range("Non ci sono ancora messaggi");
+    }
     auto msg = this->messages.back();
     time_t _t = msg.getMyTime();
     struct tm* localTime = localtime(&_t);
