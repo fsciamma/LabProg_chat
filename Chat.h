@@ -19,7 +19,7 @@ protected:
 
 public:
     Chat();
-    virtual ~Chat() override{}
+    ~Chat() override{}
 
     void subscribe(Observer *o) override;
     void unsubscribe(Observer *o) override;
