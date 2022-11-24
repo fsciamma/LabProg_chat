@@ -24,8 +24,10 @@ public:
     explicit User(const std::string& name);
     virtual ~User(){}
 
+    void mapChatToName(const std::string& chatName, std::shared_ptr<Chat> c);
     void createChat(User* u);
-    void createGroupChat(std::vector<User*> users, std::string groupName);
+    void createGroupChat(const std::vector<User*>& users, const std::string& groupName);
+    void addUserToGroupChat(const std::string& groupName, User* u);
     void deleteChat(User* u);
     void sendMessage(std::string txt, const std::string& _name = "Filippo");
     void readChat(const std::string& chatName);

@@ -4,10 +4,11 @@
 
 #include <iostream>
 #include <string>
+#include <utility>
 #include <unistd.h>
 #include "User.h"
 
-User::User() {
+User::User() { //TODO valutare se togliere
     std::cout << "Inserisci il nome dell'utente:" << std::endl;
     std::cin >> this->name;
     this->myNotifier = new Notifier(this->name);
@@ -20,29 +21,36 @@ User::User(const std::string& name){
     this->BN = new badNotifier(4);
 }
 
+void User::mapChatToName(const std::string& chatName, std::shared_ptr<Chat> c){
+    this->myChats.insert(std::make_pair(chatName, c));
+    c->subscribe(this->myNotifier);
+}
+
 void User::createChat(User* u) {//TODO valutare se serve un metodo di appoggio che prenda in ingresso lo shared_ptr a Chat e faccia l'insert su User1->myChats della coppia User2->nome - Chat e il subscribe di User1->myNotifier alla Chat e faccia lo stesso su User2
     if(this->myChats.find(u->name) != this->myChats.end()){ //TODO creare test e mettere try/catch nel main
         throw std::runtime_error("Esiste già una chat con " + u->name);
     }
     auto c = std::make_shared<Chat>();
-    this->myChats.insert(std::make_pair(u->name, c));
-    c->subscribe(this->myNotifier);
-    u->myChats.insert(std::make_pair(this->name, c));
-    c->subscribe(u->myNotifier);
+    this->mapChatToName(u->name, c);
+    u->mapChatToName(this->name, c);
 }
 
-void User::createGroupChat(std::vector<User*> users, std::string groupName){ //TODO creare test e mettere try/catch nel main
+void User::createGroupChat(const std::vector<User*>& users, const std::string& groupName){ //TODO creare test e mettere try/catch nel main
     if(this->myChats.find(groupName) != this->myChats.end()){
         throw std::runtime_error("Hai gia' un gruppo chiamato " + groupName);
     }
-    auto c = std::make_shared<GroupChat>(groupName);
-    this->myChats.insert(std::make_pair(groupName, c));
-    c->subscribe(this->myNotifier);
-    c->subscribe(this->BN); //Usato solo per avere una seconda sottoclasse di Observer, per mettere in risalto il controllo tramite dynamic_cast
+    auto gc = std::make_shared<GroupChat>(groupName);
+    this->mapChatToName(groupName, gc);
+    gc->subscribe(this->BN); //Usato solo per avere una seconda sottoclasse di Observer, per mettere in risalto il controllo tramite dynamic_cast
     for (auto u: users) {
-        u->myChats.insert(std::make_pair(groupName, c));
-        c->subscribe(u->myNotifier);
+        u->mapChatToName(groupName, gc);
     }
+}
+
+//TODO creare metodi per aggiungere o togliere utenti ad una chat di gruppo
+void User::addUserToGroupChat(const std::string& groupName, User *u) {
+    auto groupNameMapped = this->myChats.find(groupName);
+    groupNameMapped != this->myChats.end() ? u->mapChatToName(groupName, groupNameMapped->second) : throw std::runtime_error("Non è stata trovata nessuna chat di gruppo " + groupName);
 }
 
 void User::deleteChat(User* u){
@@ -56,7 +64,7 @@ void User::sendMessage(std::string txt, const std::string& _name) { //TODO crear
         throw std::runtime_error("Non e' stata trovata nessuna chat con " + _name);
     }
     auto c = myChats.find(_name)->second;
-    Message* msg = new Message(this->name, txt);
+    Message* msg = new Message(this->name, std::move(txt));
     c->addMessage(*msg);
     sleep(1);
 }
