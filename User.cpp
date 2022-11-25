@@ -26,8 +26,16 @@ void User::mapChatToName(const std::string& chatName, std::shared_ptr<Chat> c){
     c->subscribe(this->myNotifier);
 }
 
-void User::createChat(User* u) {//TODO valutare se serve un metodo di appoggio che prenda in ingresso lo shared_ptr a Chat e faccia l'insert su User1->myChats della coppia User2->nome - Chat e il subscribe di User1->myNotifier alla Chat e faccia lo stesso su User2
-    if(this->myChats.find(u->name) != this->myChats.end()){ //TODO creare test e mettere try/catch nel main
+void User::unmapChatToName(const std::string& chatName){
+    if(this->myChats.find(chatName) == this->myChats.end()) {
+        throw std::runtime_error(this->name + " non fa parte del gruppo " + chatName);
+    }
+    this->myChats.find(chatName)->second->unsubscribe(this->myNotifier);
+    this->myChats.erase(chatName);
+}
+
+void User::createChat(User* u) {
+    if(this->myChats.find(u->name) != this->myChats.end()){ //TODO mettere try/catch nel main
         throw std::runtime_error("Esiste già una chat con " + u->name);
     }
     auto c = std::make_shared<Chat>();
@@ -52,11 +60,15 @@ void User::addUserToGroupChat(const std::string& groupName, User *u) {
     auto groupNameMapped = this->myChats.find(groupName);
     groupNameMapped != this->myChats.end() ? u->mapChatToName(groupName, groupNameMapped->second) : throw std::runtime_error("Non è stata trovata nessuna chat di gruppo " + groupName);
 }
-
-void User::deleteChat(User* u){
-    if(this->myChats.find(u->name) != this->myChats.end()){
-        this->myChats.erase(u->name);
-    }
+/**
+ * Permette ad uno User di rimuovere un altro User da un gruppo a cui partecipa
+ * @param groupName nome del gruppo da cui si vuole rimuovere lo User u
+ * @param u User da rimuovere
+ * @throws std::runtime_error se lo User che invoca il metodo non fa parte di nessun gruppo chiamato groupName
+ */
+void User::kickUserFromGroupChat(const std::string& groupName, User* u){
+    auto groupNameMapped = this->myChats.find(groupName);
+    groupNameMapped != this->myChats.end() ? u->unmapChatToName(groupName) : throw std::runtime_error("Non e' stata trovata nessuna chat di gruppo " + groupName);
 }
 
 void User::sendMessage(std::string txt, const std::string& _name) { //TODO creare test e mettere try/catch nel main
@@ -87,9 +99,11 @@ void User::readLastMessageFrom(const std::string& chatName) {
     }
 }
 
-void User::leaveGroup(const std::string& groupName) {
-    if(this->myChats.find(groupName) != this->myChats.end()){
-        this->myChats.erase(groupName);
+void User::leaveGroup(const std::string& groupName) { //TODO modificare per perfezionare , integrarlo con kickUser
+    try {
+        this->unmapChatToName(groupName);
         std::cout << "Hai lasciato il gruppo " + groupName << std::endl;
+    } catch (std::runtime_error &r){
+        std::cerr << r.what() << std::endl;
     }
 }

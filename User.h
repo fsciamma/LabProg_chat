@@ -28,7 +28,7 @@ public:
     void createChat(User* u);
     void createGroupChat(const std::vector<User*>& users, const std::string& groupName);
     void addUserToGroupChat(const std::string& groupName, User* u);
-    void deleteChat(User* u);
+    void kickUserFromGroupChat(const std::string& groupName, User* u);
     void sendMessage(std::string txt, const std::string& _name = "Filippo");
     void readChat(const std::string& chatName);
     void readLastMessageFrom(const std::string& chatName);
