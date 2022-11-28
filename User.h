@@ -24,18 +24,23 @@ public:
     explicit User(const std::string& name);
     virtual ~User(){}
 
+    //Metodi per mappare nomi e shared_ptr
     void mapChatToName(const std::string& chatName, std::shared_ptr<Chat> c);
     void unmapChatToName(const std::string& chatName);
 
+    //Metodi Chat
     void createChat(User* u);
+    void readChat(const std::string& chatName);
+    void readLastMessageFrom(const std::string& chatName);
+
+    //Metodi GroupChat
     void createGroupChat(const std::vector<User*>& users, const std::string& groupName);
     void addUserToGroupChat(const std::string& groupName, User* u);
     void kickUserFromGroupChat(const std::string& groupName, User* u);
-    void sendMessage(std::string txt, const std::string& _name = "Filippo");
-    void readChat(const std::string& chatName);
-    void readLastMessageFrom(const std::string& chatName);
     void leaveGroup(const std::string& groupName);
 
+    //Metodi Message
+    void sendMessage(std::string txt, const std::string& _name = "Filippo");
 };
 
 
