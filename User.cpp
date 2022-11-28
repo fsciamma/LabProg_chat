@@ -14,7 +14,10 @@ User::User() { //TODO valutare se togliere
     this->myNotifier = new Notifier(this->name);
     this->BN = new badNotifier(4);
 }
-
+/**
+ * Costruttore
+ * @param name Il nome dello User
+ */
 User::User(const std::string& name){
     this->name = name;
     this->myNotifier = new Notifier(name);
@@ -43,7 +46,7 @@ void User::createChat(User* u) {
     u->mapChatToName(this->name, c);
 }
 
-void User::createGroupChat(const std::vector<User*>& users, const std::string& groupName){ //TODO creare test e mettere try/catch nel main
+void User::createGroupChat(const std::vector<User*>& users, const std::string& groupName){ //TODO mettere try/catch nel main
     if(this->myChats.find(groupName) != this->myChats.end()){
         throw std::runtime_error("Hai gia' un gruppo chiamato " + groupName);
     }
@@ -81,6 +84,11 @@ void User::sendMessage(std::string txt, const std::string& _name) { //TODO crear
     sleep(1);
 }
 
+/**
+ *
+ * @param chatName
+ * @throws std::runtime_error Se non esiste nessuna chat che risponde al nome indicato in chatName
+ */
 void User::readChat(const std::string& chatName){
     try {
         auto chatNameMapped = this->myChats.find(chatName);
