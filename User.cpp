@@ -59,7 +59,7 @@ void User::createGroupChat(const std::vector<User*>& users, const std::string& g
 }
 
 //TODO creare metodi per aggiungere o togliere utenti ad una chat di gruppo
-void User::addUserToGroupChat(const std::string& groupName, User *u) {
+void User::addUserToGroupChat( User *u, const std::string& groupName) {
     auto groupNameMapped = this->myChats.find(groupName);
     groupNameMapped != this->myChats.end() ? u->mapChatToName(groupName, groupNameMapped->second) : throw std::runtime_error("Non è stata trovata nessuna chat di gruppo " + groupName);
 }
@@ -69,7 +69,7 @@ void User::addUserToGroupChat(const std::string& groupName, User *u) {
  * @param u User da rimuovere
  * @throws std::runtime_error se lo User che invoca il metodo non fa parte di nessun gruppo chiamato groupName
  */
-void User::kickUserFromGroupChat(const std::string& groupName, User* u){
+void User::kickUserFromGroupChat(User* u, const std::string& groupName){
     auto groupNameMapped = this->myChats.find(groupName);
     groupNameMapped != this->myChats.end() ? u->unmapChatToName(groupName) : throw std::runtime_error("Non e' stata trovata nessuna chat di gruppo " + groupName);
 }

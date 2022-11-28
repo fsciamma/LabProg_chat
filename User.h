@@ -35,8 +35,8 @@ public:
 
     //Metodi GroupChat
     void createGroupChat(const std::vector<User*>& users, const std::string& groupName);
-    void addUserToGroupChat(const std::string& groupName, User* u);
-    void kickUserFromGroupChat(const std::string& groupName, User* u);
+    void addUserToGroupChat(User* u, const std::string& groupName);
+    void kickUserFromGroupChat(User* u, const std::string& groupName);
     void leaveGroup(const std::string& groupName);
 
     //Metodi Message
