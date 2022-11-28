@@ -3,11 +3,53 @@
 #include "User.h"
 
 int main() {
-    User* u1 = new User();
-    User* u2 = new User();
-    User* u3 = new User();
+    User* filippo = new User("Filippo");
+    User* francesco = new User("Francesco");
 
-    u1->createChat(u2);
-    u1->createChat(u3);
-    u1->sendMessage();
+    User* vittorio = new User("Vittorio");
+    User* matteo = new User("Matteo");
+
+    User* giorgio = new User("Giorgio");
+    User* leonardo = new User("Leonardo");
+    User* tommaso = new User("Tommaso");
+
+    //Chat singole
+    try {
+        filippo->createChat(francesco);
+        filippo->sendMessage("Ciao", "Francesco");
+        filippo->sendMessage("Come va?", "Francesco");
+        francesco->sendMessage("Tutto bene, grazie");
+        francesco->readChat("Filippo");
+        filippo->readLastMessageFrom("Francesco");
+        francesco->createChat(filippo);
+    } catch (std::runtime_error &r){
+        std::cerr << r.what() << std::endl;
+    }
+
+    std::vector<User*> studenti;
+    studenti.push_back(vittorio);
+    studenti.push_back(matteo);
+    try {
+        filippo->createGroupChat(studenti, "Uni");
+        vittorio->sendMessage("Domani ci siete?", "Uni");
+        matteo->sendMessage("Solo la mattina", "Uni");
+        filippo->sendMessage("Presente", "Uni");
+        matteo->readChat("Uni");
+    } catch (std::runtime_error &r){
+        std::cerr << r.what() << std::endl;
+    }
+
+    std::vector<User*> tifosi;
+    tifosi.push_back(giorgio);
+    tifosi.push_back(leonardo);
+    try{
+        filippo->createGroupChat(tifosi, "Stadio");
+        giorgio->sendMessage("Chi viene domenica?", "Stadio");
+        leonardo->addUserToGroupChat(tommaso, "Stadio");
+        leonardo->sendMessage("Ho aggiunto anche tommi, almeno legge pure lui", "Stadio");
+        tommaso->sendMessage("Ragazzi io non ci sono, tifo Milan", "Stadio");
+        filippo->readChat("Stadio");
+    } catch (std::runtime_error &r){
+        std::cerr << r.what() << std::endl;
+    }
 }
