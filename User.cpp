@@ -74,7 +74,7 @@ void User::kickUserFromGroupChat(const std::string& groupName, User* u){
     groupNameMapped != this->myChats.end() ? u->unmapChatToName(groupName) : throw std::runtime_error("Non e' stata trovata nessuna chat di gruppo " + groupName);
 }
 
-void User::sendMessage(std::string txt, const std::string& _name) { //TODO creare test e mettere try/catch nel main
+void User::sendMessage(std::string txt, const std::string& _name) { //TODO mettere try/catch nel main
     if(myChats.find(_name) == myChats.end()){
         throw std::runtime_error("Non e' stata trovata nessuna chat con " + _name);
     }
