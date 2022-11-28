@@ -9,6 +9,7 @@ TEST(User, chatMethods){
     User* u1 = new User("Tester");
     User* u2 = new User("OtherTester");
 
+    ASSERT_THROW(u1->sendMessage("Messaggio di test", "OtherTester"), std::runtime_error);
     ASSERT_NO_THROW(u1->createChat(u2));
     ASSERT_THROW(u2->createChat(u1), std::runtime_error);
 
@@ -37,10 +38,10 @@ TEST(User, groupMethods){
     ASSERT_THROW(u4->readChat("GroupTest"), std::runtime_error);
     std::cout << std::endl;
 
-    u1->addUserToGroupChat("GroupTest", u4);
+    u1->addUserToGroupChat(u4, "GroupTest");
     std::cout << "u2, u3 e u4 ricevono il messaggio di u1." << std::endl;
     ASSERT_NO_THROW(u1->sendMessage("Messaggio di test - 3", "GroupTest"));
-    u1->kickUserFromGroupChat("GroupTest", u2);
+    u1->kickUserFromGroupChat(u2, "GroupTest");
     u1->leaveGroup("GroupTest");
     std::cout << std::endl;
 
