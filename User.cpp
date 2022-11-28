@@ -21,7 +21,7 @@ User::User() { //TODO valutare se togliere
 User::User(const std::string& name){
     this->name = name;
     this->myNotifier = new Notifier(name);
-    this->BN = new badNotifier(4);
+    this->BN = new badNotifier(4); //il BadNotifier viene utilizzato solo per mostrare come viene utilizzato il dynamic_cast in Chat.cpp
 }
 
 void User::mapChatToName(const std::string& chatName, std::shared_ptr<Chat> c){
@@ -39,7 +39,7 @@ void User::unmapChatToName(const std::string& chatName){
 
 void User::createChat(User* u) {
     if(this->myChats.find(u->name) != this->myChats.end()){ //TODO mettere try/catch nel main
-        throw std::runtime_error("Esiste già una chat con " + u->name);
+        throw std::runtime_error("Esiste gia' una chat con " + u->name);
     }
     auto c = std::make_shared<Chat>();
     this->mapChatToName(u->name, c);
@@ -81,7 +81,7 @@ void User::sendMessage(std::string txt, const std::string& _name) { //TODO mette
     auto c = myChats.find(_name)->second;
     Message* msg = new Message(this->name, std::move(txt));
     c->addMessage(*msg);
-    sleep(1);
+    sleep(1); //TODO inutile, serve a fare avere ai messaggi degli orari diversi
 }
 
 /**
@@ -90,21 +90,25 @@ void User::sendMessage(std::string txt, const std::string& _name) { //TODO mette
  * @throws std::runtime_error Se non esiste nessuna chat che risponde al nome indicato in chatName
  */
 void User::readChat(const std::string& chatName){
+    std::cout << "Chat: " + chatName << std::endl;
     try {
         auto chatNameMapped = this->myChats.find(chatName);
         chatNameMapped != this->myChats.end() ? chatNameMapped->second->readChatMessages() : throw std::runtime_error("Non esiste nessuna chat " + chatName); //TODO aggiungere metodo per testare il throw dell'eccezione
     } catch (std::out_of_range &o){
         std::cerr << "Out of range error: " << o.what() << std::endl;
     }
+    std::cout << std::endl;
 }
 
 void User::readLastMessageFrom(const std::string& chatName) {
+    std::cout << "Ultimo messaggio dalla chat: " + chatName << std::endl;
     try {
         auto chatNameMapped = this->myChats.find(chatName);
         chatNameMapped != this->myChats.end() ? chatNameMapped->second->readLastMessage() : throw std::runtime_error("Non esiste nessuna chat " + chatName); //TODO aggiungere metodo per testare il throw dell'eccezione
     } catch (std::out_of_range &o){
         std::cerr << "Out of range error: " << o.what() << std::endl;
     }
+    std::cout << std::endl;
 }
 
 void User::leaveGroup(const std::string& groupName) { //TODO modificare per perfezionare , integrarlo con kickUser
