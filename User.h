@@ -25,6 +25,8 @@ public:
     virtual ~User(){}
 
     void mapChatToName(const std::string& chatName, std::shared_ptr<Chat> c);
+    void unmapChatToName(const std::string& chatName);
+
     void createChat(User* u);
     void createGroupChat(const std::vector<User*>& users, const std::string& groupName);
     void addUserToGroupChat(const std::string& groupName, User* u);
