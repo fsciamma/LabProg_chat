@@ -11,6 +11,7 @@
 class GroupChat : public Chat{
 private:
     std::string groupName;
+    //TODO potrei aggiungere un std::vector di User che sono admin del gruppo...?
 
 public:
     explicit GroupChat(std::string gn) : groupName(gn){}
