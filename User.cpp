@@ -119,3 +119,16 @@ void User::leaveGroup(const std::string& groupName) { //TODO modificare per perf
         std::cerr << r.what() << std::endl;
     }
 }
+
+void User::chatRegister() const {
+    std::cout << " --- Registro delle Chat di " + name + " --- " << std::endl;
+    for(auto receiver: myChats){
+        if(std::shared_ptr<GroupChat> tmp = std::dynamic_pointer_cast<GroupChat>(receiver.second)){
+            std::cout << "Gruppo " + receiver.first + ":\n";
+            receiver.second->readChatMessages();
+        } else {
+            std::cout << receiver.first +"\n";
+            receiver.second->readChatMessages();
+        }
+    }
+}

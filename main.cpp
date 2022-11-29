@@ -52,4 +52,7 @@ int main() {
     } catch (std::runtime_error &r){
         std::cerr << r.what() << std::endl;
     }
+
+    filippo->chatRegister();
+    vittorio->chatRegister();
 }

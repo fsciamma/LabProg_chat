@@ -24,6 +24,8 @@ public:
     explicit User(const std::string& name);
     virtual ~User(){}
 
+    void chatRegister() const;
+
     //Metodi per mappare nomi e shared_ptr
     void mapChatToName(const std::string& chatName, std::shared_ptr<Chat> c);
     void unmapChatToName(const std::string& chatName);
