@@ -89,7 +89,7 @@ void User::sendMessage(std::string txt, const std::string& _name) { //TODO mette
  * @param chatName
  * @throws std::runtime_error Se non esiste nessuna chat che risponde al nome indicato in chatName
  */
-void User::readChat(const std::string& chatName){
+void User::readChat(const std::string& chatName) const{
     std::cout << "Chat: " + chatName << std::endl;
     try {
         auto chatNameMapped = this->myChats.find(chatName);
@@ -100,7 +100,7 @@ void User::readChat(const std::string& chatName){
     std::cout << std::endl;
 }
 
-void User::readLastMessageFrom(const std::string& chatName) {
+void User::readLastMessageFrom(const std::string& chatName) const{
     std::cout << "Ultimo messaggio dalla chat: " + chatName << std::endl;
     try {
         auto chatNameMapped = this->myChats.find(chatName);

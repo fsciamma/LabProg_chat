@@ -32,8 +32,8 @@ public:
 
     //Metodi Chat
     void createChat(User* u);
-    void readChat(const std::string& chatName);
-    void readLastMessageFrom(const std::string& chatName);
+    void readChat(const std::string& chatName) const;
+    void readLastMessageFrom(const std::string& chatName) const;
 
     //Metodi GroupChat
     void createGroupChat(const std::vector<User*>& users, const std::string& groupName);
