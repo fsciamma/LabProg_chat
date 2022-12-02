@@ -11,7 +11,6 @@
 User::User() { //TODO valutare se togliere
     std::cout << "Inserisci il nome dell'utente:" << std::endl;
     std::cin >> this->name;
-    this->myNotifier = new Notifier(this->name);
 }
 /**
  * Costruttore
@@ -19,19 +18,26 @@ User::User() { //TODO valutare se togliere
  */
 User::User(const std::string& name){
     this->name = name;
-    this->myNotifier = new Notifier(name);
 }
 
 void User::mapChatToName(const std::string& chatName, std::shared_ptr<Chat> c){
     this->myChats.insert(std::make_pair(chatName, c));
-    c->subscribe(this->myNotifier);
+    Notifier* n = new Notifier(this->name);
+    this->myNotifiers.push_back(n);
+    c->subscribe(n);
 }
 
 void User::unmapChatToName(const std::string& chatName){
     if(this->myChats.find(chatName) == this->myChats.end()) {
         throw std::runtime_error(this->name + " non fa parte del gruppo " + chatName);
     }
-    this->myChats.find(chatName)->second->unsubscribe(this->myNotifier);
+    Notifier* n;
+    for(auto tmp: myNotifiers){
+        if(tmp->getName() == chatName){
+            n = tmp;
+        }
+    }
+    this->myChats.find(chatName)->second->unsubscribe(n);
     this->myChats.erase(chatName);
 }
 

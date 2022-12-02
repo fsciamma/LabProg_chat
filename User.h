@@ -15,7 +15,7 @@ class User {
 private:
     std::string name;
     std::map<std::string, std::shared_ptr<Chat>> myChats;
-    Notifier* myNotifier; //TODO devo mettere un vector<Observer*>?
+    std::vector<Notifier*> myNotifiers;
 
 public:
     User();
