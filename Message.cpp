@@ -4,12 +4,16 @@
 
 #include "Message.h"
 
-Message::Message(std::string sender, std::string text) : sender(sender), text(text){
+Message::Message(std::string sender, std::string receiver, std::string text) : sender(sender), receiver(receiver), text(text){
     time(&myTime);
 }
 
 const std::string &Message::getSender() const {
     return sender;
+}
+
+const std::string &Message::getReceiver() const {
+    return receiver;
 }
 
 const std::string &Message::getText() const {

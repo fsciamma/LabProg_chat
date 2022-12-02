@@ -11,17 +11,18 @@
 class Message {
 private:
     std::string sender;
+    std::string receiver;
     std::string text;
     time_t myTime;
 
 public:
-    Message(std::string sender, std::string text);
+    Message(std::string sender, std::string receiver, std::string text);
 
     ~Message(){}
 
     const std::string &getSender() const;
+    const std::string &getReceiver() const;
     const std::string &getText() const;
-
     time_t getMyTime() const;
 };
 

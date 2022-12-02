@@ -79,8 +79,8 @@ void User::sendMessage(std::string txt, const std::string& _name) { //TODO mette
         throw std::runtime_error("Non e' stata trovata nessuna chat con " + _name);
     }
     auto c = myChats.find(_name)->second;
-    Message* msg = new Message(this->name, std::move(txt));
-    c->addMessage(*msg);
+    Message msg(this->name, _name, std::move(txt));
+    c->addMessage(msg);
     sleep(1); //TODO inutile, serve a fare avere ai messaggi degli orari diversi
 }
 
