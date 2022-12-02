@@ -12,7 +12,6 @@ User::User() { //TODO valutare se togliere
     std::cout << "Inserisci il nome dell'utente:" << std::endl;
     std::cin >> this->name;
     this->myNotifier = new Notifier(this->name);
-    this->BN = new badNotifier(4);
 }
 /**
  * Costruttore
@@ -21,7 +20,6 @@ User::User() { //TODO valutare se togliere
 User::User(const std::string& name){
     this->name = name;
     this->myNotifier = new Notifier(name);
-    this->BN = new badNotifier(4); //il BadNotifier viene utilizzato solo per mostrare come viene utilizzato il dynamic_cast in Chat.cpp
 }
 
 void User::mapChatToName(const std::string& chatName, std::shared_ptr<Chat> c){
@@ -52,7 +50,6 @@ void User::createGroupChat(const std::vector<User*>& users, const std::string& g
     }
     auto gc = std::make_shared<GroupChat>(groupName);
     this->mapChatToName(groupName, gc);
-    gc->subscribe(this->BN); //Usato solo per avere una seconda sottoclasse di Observer, per mettere in risalto il controllo tramite dynamic_cast
     for (auto u: users) {
         u->mapChatToName(groupName, gc);
     }

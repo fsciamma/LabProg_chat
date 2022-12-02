@@ -10,14 +10,12 @@
 #include <memory>
 #include "Notifier.h"
 #include "GroupChat.h"
-#include "badNotifier.h"
 
 class User {
 private:
     std::string name;
     std::map<std::string, std::shared_ptr<Chat>> myChats;
     Notifier* myNotifier; //TODO devo mettere un vector<Observer*>?
-    badNotifier* BN;
 
 public:
     User();
