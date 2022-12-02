@@ -7,8 +7,8 @@
 
 
 TEST(Chat, readMessages){
-    Chat* c = new Chat();
+    Chat c;
 
-    ASSERT_THROW(c->readChatMessages(), std::out_of_range);
-    ASSERT_THROW(c->readLastMessage(), std::out_of_range);
+    ASSERT_THROW(c.readChatMessages(), std::out_of_range);
+    ASSERT_THROW(c.readLastMessage(), std::out_of_range);
 }
