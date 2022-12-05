@@ -44,6 +44,10 @@ public:
 
     //Metodi Message
     void sendMessage(std::string txt, const std::string& _name = "Filippo");
+
+    const std::map<std::string, Notifier *> &getMyNotifiers() const;
+
+    const std::map<std::string, std::shared_ptr<Chat>> &getMyChats() const;
 };
 
 

@@ -155,3 +155,11 @@ void User::getUnreadMessages() const {
 void User::readUnreadMessages(std::string chat) {
     this->myChats.find(chat)->second->showUnreadMessages(this->name);
 }
+
+const std::map<std::string, Notifier *> &User::getMyNotifiers() const {
+    return myNotifiers;
+}
+
+const std::map<std::string, std::shared_ptr<Chat>> &User::getMyChats() const {
+    return myChats;
+}
