@@ -20,7 +20,7 @@ void Notifier::update(Message& msg) {
     }
 }
 
-std::string Notifier::getName() {
+const std::string &Notifier::getName() const {
     return name;
 }
 

@@ -14,8 +14,8 @@
 class User {
 private:
     std::string name;
-    std::map<std::string, std::shared_ptr<Chat>> myChats;
-    std::map<std::string, Notifier*> myNotifiers;
+    std::map<const std::string, std::shared_ptr<Chat>> myChats;
+    std::map<const std::string, Notifier*> myNotifiers;
 
 public:
     User();
@@ -23,9 +23,9 @@ public:
     virtual ~User(){}
 
     void chatRegister() const;
-    void getUnreadMessages(std::string chat) const;
+    void getUnreadMessages(const std::string &chat) const;
     void getUnreadMessages() const;
-    void readUnreadMessages(std::string chat);
+    void readUnreadMessages(const std::string &chat);
 
     //Metodi per mappare nomi e shared_ptr
     void mapChatToName(const std::string& chatName, std::shared_ptr<Chat> c);
@@ -45,9 +45,9 @@ public:
     //Metodi Message
     void sendMessage(std::string txt, const std::string& _name = "Filippo");
 
-    const std::map<std::string, Notifier *> &getMyNotifiers() const;
+    const std::map<const std::string, Notifier *> &getMyNotifiers() const;
 
-    const std::map<std::string, std::shared_ptr<Chat>> &getMyChats() const;
+    const std::map<const std::string, std::shared_ptr<Chat>> &getMyChats() const;
 };
 
 

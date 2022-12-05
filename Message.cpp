@@ -25,13 +25,13 @@ time_t Message::getMyTime() const {
     return myTime;
 }
 
-bool Message::isRead(std::string userName) const {
+bool Message::isRead(const std::string &userName) const {
     if(this->read.find(userName) != this->read.end()){
         return true;
     }
     return false;
 }
 
-void Message::setRead(std::string userName) {
+void Message::setRead(const std::string &userName) {
     this->read.insert(userName);
 }

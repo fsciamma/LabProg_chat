@@ -26,8 +26,8 @@ public:
     const std::string &getReceiver() const;
     const std::string &getText() const;
     time_t getMyTime() const;
-    bool isRead(std::string userName) const;
-    void setRead(std::string userName);
+    bool isRead(const std::string &userName) const;
+    void setRead(const std::string &userName);
 };
 
 

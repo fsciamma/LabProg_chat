@@ -26,10 +26,10 @@ public:
     void notifyObservers(Message msg) const override;
 
     void addMessage(Message msg);
-    int getUnreadMessages(std::string userName) const;
-    virtual void readChatMessages(std::string userName);
-    virtual void readLastMessage(std::string userName);
-    virtual void showUnreadMessages(std::string userName);
+    int getUnreadMessages(const std::string &userName) const;
+    virtual void readChatMessages(const std::string &userName);
+    virtual void readLastMessage(const std::string &userName);
+    virtual void showUnreadMessages(const std::string &userName);
 };
 
 

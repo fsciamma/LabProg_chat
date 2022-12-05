@@ -13,7 +13,7 @@
 
 class Notifier : public Observer{
 private:
-    std::string name;
+    const std::string name;
     std::shared_ptr<Chat> c;
 
 public:
@@ -22,7 +22,8 @@ public:
     virtual ~Notifier() override{}
 
     void update(Message& msg) override;
-    std::string getName();
+
+    const std::string &getName() const;
 
     int getUnreadNotifications();
 

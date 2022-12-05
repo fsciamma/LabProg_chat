@@ -71,7 +71,7 @@ void User::kickUserFromGroupChat(User* u, const std::string& groupName){
     groupNameMapped != this->myChats.end() ? u->unmapChatToName(groupName) : throw std::runtime_error("Non e' stata trovata nessuna chat di gruppo " + groupName);
 }
 
-void User::sendMessage(std::string txt, const std::string& _name) { //TODO mettere try/catch nel main
+void User::sendMessage(std::string txt, const std::string& _name) { //non ho messo const perché viene utilizzata la funzione std::move
     if(myChats.find(_name) == myChats.end()){
         throw std::runtime_error("Non e' stata trovata nessuna chat con " + _name);
     }
@@ -134,7 +134,7 @@ void User::chatRegister() const {
  * Indica il numero di messaggi non letti per una specifica chat
  * @param chat La chat di cui si vuole sapere il numero di messaggi non letti
  */
-void User::getUnreadMessages(std::string chat) const{
+void User::getUnreadMessages(const std::string &chat) const{
     std::cout << this->name << ", hai "<< this->myNotifiers.find(chat)->second->getUnreadNotifications() << " messaggi non letti da " << chat << "." << std::endl;
 }
 
@@ -152,14 +152,14 @@ void User::getUnreadMessages() const {
  * Chiama showUnreadMessages su una specifica chat
  * @param chat
  */
-void User::readUnreadMessages(std::string chat) {
+void User::readUnreadMessages(const std::string &chat) {
     this->myChats.find(chat)->second->showUnreadMessages(this->name);
 }
 
-const std::map<std::string, Notifier *> &User::getMyNotifiers() const {
+const std::map<const std::string, Notifier *> &User::getMyNotifiers() const {
     return myNotifiers;
 }
 
-const std::map<std::string, std::shared_ptr<Chat>> &User::getMyChats() const {
+const std::map<const std::string, std::shared_ptr<Chat>> &User::getMyChats() const {
     return myChats;
 }

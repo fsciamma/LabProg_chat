@@ -8,7 +8,7 @@ const std::string &GroupChat::getGroupName() const {
     return groupName;
 }
 
-void GroupChat::readChatMessages(std::string userName){
+void GroupChat::readChatMessages(const std::string &userName){
     if(this->messages.empty()){
         throw std::out_of_range("Non ci sono ancora messaggi");
     }
@@ -22,7 +22,7 @@ void GroupChat::readChatMessages(std::string userName){
     }
 }
 
-void GroupChat::readLastMessage(std::string userName) {
+void GroupChat::readLastMessage(const std::string &userName) {
     if(this->messages.empty()){
         throw std::out_of_range("Non ci sono ancora messaggi");
     }
@@ -35,7 +35,7 @@ void GroupChat::readLastMessage(std::string userName) {
     std::cout << timestamp << " " + msg.getSender() + " @" + this->groupName + ": " + msg.getText() << std::endl;
 }
 
-void GroupChat::showUnreadMessages(std::string userName) {
+void GroupChat::showUnreadMessages(const std::string &userName) {
     if(this->messages.empty()){
         throw std::out_of_range("Non ci sono ancora messaggi");
     }
