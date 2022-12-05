@@ -22,8 +22,8 @@ User::User(const std::string& name){
 
 void User::mapChatToName(const std::string& chatName, std::shared_ptr<Chat> c){
     this->myChats.insert(std::make_pair(chatName, c));
-    Notifier* n = new Notifier(this->name);
-    this->myNotifiers.push_back(n);
+    Notifier* n = new Notifier(this->name, c);
+    this->myNotifiers.insert(std::make_pair(chatName, n));
     c->subscribe(n);
 }
 
@@ -31,18 +31,13 @@ void User::unmapChatToName(const std::string& chatName){
     if(this->myChats.find(chatName) == this->myChats.end()) {
         throw std::runtime_error(this->name + " non fa parte del gruppo " + chatName);
     }
-    Notifier* n;
-    for(auto tmp: myNotifiers){
-        if(tmp->getName() == chatName){
-            n = tmp;
-        }
-    }
+    Notifier* n = myNotifiers.find(chatName)->second;
     this->myChats.find(chatName)->second->unsubscribe(n);
     this->myChats.erase(chatName);
 }
 
 void User::createChat(User* u) {
-    if(this->myChats.find(u->name) != this->myChats.end()){ //TODO mettere try/catch nel main
+    if(this->myChats.find(u->name) != this->myChats.end()){
         throw std::runtime_error("Esiste gia' una chat con " + u->name);
     }
     auto c = std::make_shared<Chat>();
@@ -61,7 +56,6 @@ void User::createGroupChat(const std::vector<User*>& users, const std::string& g
     }
 }
 
-//TODO creare metodi per aggiungere o togliere utenti ad una chat di gruppo
 void User::addUserToGroupChat( User *u, const std::string& groupName) {
     auto groupNameMapped = this->myChats.find(groupName);
     groupNameMapped != this->myChats.end() ? u->mapChatToName(groupName, groupNameMapped->second) : throw std::runtime_error("Non è stata trovata nessuna chat di gruppo " + groupName);
@@ -114,7 +108,7 @@ void User::readLastMessageFrom(const std::string& chatName) const{
     std::cout << std::endl;
 }
 
-void User::leaveGroup(const std::string& groupName) { //TODO modificare per perfezionare , integrarlo con kickUser
+void User::leaveGroup(const std::string& groupName) {
     try {
         this->unmapChatToName(groupName);
         std::cout << "Hai lasciato il gruppo " + groupName << std::endl;

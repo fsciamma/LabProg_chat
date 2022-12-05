@@ -15,7 +15,7 @@ class User {
 private:
     std::string name;
     std::map<std::string, std::shared_ptr<Chat>> myChats;
-    std::vector<Notifier*> myNotifiers;
+    std::map<std::string, Notifier*> myNotifiers;
 
 public:
     User();

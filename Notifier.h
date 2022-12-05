@@ -7,19 +7,24 @@
 
 
 #include <string>
+#include <memory>
 #include "Observer.h"
+#include "GroupChat.h"
 
 class Notifier : public Observer{
 private:
     std::string name;
+    std::shared_ptr<Chat> c;
 
 public:
-    explicit Notifier(const std::string &name);
+    explicit Notifier(const std::string &name, std::shared_ptr<Chat> c);
 
     virtual ~Notifier() override{}
 
     void update(Message& msg) override;
     std::string getName();
+
+    int getUnreadNotifications();
 
 };
 
