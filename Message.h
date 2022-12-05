@@ -7,6 +7,7 @@
 
 
 #include <string>
+#include <set>
 
 class Message {
 private:
@@ -14,6 +15,7 @@ private:
     std::string receiver;
     std::string text;
     time_t myTime;
+    std::set<std::string> read;
 
 public:
     Message(std::string sender, std::string receiver, std::string text);
@@ -24,6 +26,8 @@ public:
     const std::string &getReceiver() const;
     const std::string &getText() const;
     time_t getMyTime() const;
+    bool isRead(std::string userName) const;
+    void setRead(std::string userName);
 };
 
 

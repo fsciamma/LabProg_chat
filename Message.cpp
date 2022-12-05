@@ -5,6 +5,7 @@
 #include "Message.h"
 
 Message::Message(std::string sender, std::string receiver, std::string text) : sender(sender), receiver(receiver), text(text){
+    read.insert(sender); //il nome del mittente viene subito salvato tra coloro che hanno letto il messaggio
     time(&myTime);
 }
 
@@ -22,4 +23,15 @@ const std::string &Message::getText() const {
 
 time_t Message::getMyTime() const {
     return myTime;
+}
+
+bool Message::isRead(std::string userName) const {
+    if(this->read.find(userName) != this->read.end()){
+        return true;
+    }
+    return false;
+}
+
+void Message::setRead(std::string userName) {
+    this->read.insert(userName);
 }
