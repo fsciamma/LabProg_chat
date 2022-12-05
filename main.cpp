@@ -18,9 +18,14 @@ int main() {
         filippo->createChat(francesco);
         filippo->sendMessage("Ciao", "Francesco");
         filippo->sendMessage("Come va?", "Francesco");
+        francesco->getUnreadMessages("Filippo");
+        filippo->getUnreadMessages("Francesco");
         francesco->sendMessage("Tutto bene, grazie");
         francesco->readChat("Filippo");
+        francesco->getUnreadMessages("Filippo");
+        filippo->getUnreadMessages("Francesco");
         filippo->readLastMessageFrom("Francesco");
+        filippo->getUnreadMessages("Francesco");
         francesco->createChat(filippo);
     } catch (std::runtime_error &r){
         std::cerr << r.what() << std::endl;
@@ -53,6 +58,10 @@ int main() {
         std::cerr << r.what() << std::endl;
     }
 
+    filippo->getUnreadMessages();
+    filippo->getUnreadMessages("Uni");
+    filippo->readUnreadMessages("Uni");
+    filippo->getUnreadMessages();
     filippo->chatRegister();
     vittorio->chatRegister();
 }
