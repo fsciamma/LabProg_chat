@@ -82,7 +82,7 @@ void User::sendMessage(std::string txt, const std::string& _name) { //TODO mette
 }
 
 /**
- *
+ * Invoca il metodo readChat della chat mappata da chatName
  * @param chatName
  * @throws std::runtime_error Se non esiste nessuna chat che risponde al nome indicato in chatName
  */
@@ -90,7 +90,7 @@ void User::readChat(const std::string& chatName) const{
     std::cout << "Chat: " + chatName << std::endl;
     try {
         auto chatNameMapped = this->myChats.find(chatName);
-        chatNameMapped != this->myChats.end() ? chatNameMapped->second->readChatMessages() : throw std::runtime_error("Non esiste nessuna chat " + chatName); //TODO aggiungere metodo per testare il throw dell'eccezione
+        chatNameMapped != this->myChats.end() ? chatNameMapped->second->readChatMessages(this->name) : throw std::runtime_error("Non esiste nessuna chat " + chatName);
     } catch (std::out_of_range &o){
         std::cerr << "Out of range error: " << o.what() << std::endl;
     }
@@ -101,7 +101,7 @@ void User::readLastMessageFrom(const std::string& chatName) const{
     std::cout << "Ultimo messaggio dalla chat: " + chatName << std::endl;
     try {
         auto chatNameMapped = this->myChats.find(chatName);
-        chatNameMapped != this->myChats.end() ? chatNameMapped->second->readLastMessage() : throw std::runtime_error("Non esiste nessuna chat " + chatName); //TODO aggiungere metodo per testare il throw dell'eccezione
+        chatNameMapped != this->myChats.end() ? chatNameMapped->second->readLastMessage(this->name) : throw std::runtime_error("Non esiste nessuna chat " + chatName);
     } catch (std::out_of_range &o){
         std::cerr << "Out of range error: " << o.what() << std::endl;
     }
@@ -122,10 +122,36 @@ void User::chatRegister() const {
     for(auto receiver: myChats){
         if(std::shared_ptr<GroupChat> tmp = std::dynamic_pointer_cast<GroupChat>(receiver.second)){
             std::cout << "Gruppo " + receiver.first + ":\n";
-            receiver.second->readChatMessages();
+            receiver.second->readChatMessages(this->name);
         } else {
             std::cout << receiver.first +"\n";
-            receiver.second->readChatMessages();
+            receiver.second->readChatMessages(this->name);
         }
     }
+}
+
+/**
+ * Indica il numero di messaggi non letti per una specifica chat
+ * @param chat La chat di cui si vuole sapere il numero di messaggi non letti
+ */
+void User::getUnreadMessages(std::string chat) const{
+    std::cout << this->name << ", hai "<< this->myNotifiers.find(chat)->second->getUnreadNotifications() << " messaggi non letti da " << chat << "." << std::endl;
+}
+
+/**
+ * Indica il numero di messaggi non letti per ogni chat
+ */
+void User::getUnreadMessages() const {
+    std::cout << this->name << ", non hai letto i seguenti messaggi:" << std::endl;
+    for(auto chat = myChats.begin(); chat != myChats.end(); ++chat){
+        std::cout << chat->first << ": " << this->myNotifiers.find(chat->first)->second->getUnreadNotifications() << std::endl;
+    }
+}
+
+/**
+ * Chiama showUnreadMessages su una specifica chat
+ * @param chat
+ */
+void User::readUnreadMessages(std::string chat) {
+    this->myChats.find(chat)->second->showUnreadMessages(this->name);
 }

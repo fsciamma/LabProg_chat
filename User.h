@@ -23,6 +23,9 @@ public:
     virtual ~User(){}
 
     void chatRegister() const;
+    void getUnreadMessages(std::string chat) const;
+    void getUnreadMessages() const;
+    void readUnreadMessages(std::string chat);
 
     //Metodi per mappare nomi e shared_ptr
     void mapChatToName(const std::string& chatName, std::shared_ptr<Chat> c);
