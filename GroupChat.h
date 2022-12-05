@@ -19,8 +19,9 @@ public:
 
     const std::string &getGroupName() const;
 
-    void readChatMessages() override;
-    void readLastMessage() override;
+    void readChatMessages(std::string userName) override;
+    void readLastMessage(std::string userName) override;
+    void showUnreadMessages(std::string userName) override;
 };
 
 
